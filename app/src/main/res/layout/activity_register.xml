@@ -7,40 +7,43 @@
     android:background="@drawable/bgorange"
     tools:context=".LoginActivity">
 
-    <TextView
-        android:id="@+id/jbus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="JBUS\n🚌"
-        android:typeface="monospace"
-        android:textColor="@color/white"
-        android:textSize="40dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="0dp"
-        android:gravity="center"
-        android:textStyle="bold"
-        />
 
     <TextView
-        android:id="@+id/signintxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign in"
-        android:layout_below="@id/jbus"
+        android:id="@+id/registertxt"
+        android:text="Register"
         android:typeface="monospace"
         android:textColor="@color/white"
         android:textSize="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="40dp"
         android:gravity="center"
         android:textStyle="bold"
         />
 
     <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/registertxt"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#30ffffff"
+        android:drawableLeft="@drawable/baseline_drive_white"
+        android:drawablePadding="15dp"
+        android:hint="Name"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/signintxt"
+        android:layout_below="@id/name"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
@@ -54,9 +57,9 @@
         android:textColorHint="@color/white"
         />
     <EditText
-        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/password"
         android:layout_below="@id/email"
         android:background="#30ffffff"
         android:hint="Password"
@@ -68,12 +71,27 @@
         android:drawablePadding="15dp"
         android:inputType="textPassword"
         />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/confirmpass"
+        android:layout_below="@id/password"
+        android:background="#30ffffff"
+        android:hint="Confirm password"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_margin="10dp"
+        android:padding="20dp"
+        android:drawableLeft="@drawable/key_white"
+        android:drawablePadding="15dp"
+        android:inputType="textPassword"
+        />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/loginbutton"
+        android:id="@+id/registerbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/password"
+        android:layout_below="@id/confirmpass"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
@@ -81,26 +99,26 @@
         android:layout_marginBottom="15dp"
         android:background="@drawable/roundedrectangle"
         android:gravity="center"
-        android:text="LOGIN"
+        android:text="register"
         app:backgroundTint="#A1FAB957" />
     <TextView
-        android:id="@+id/donthaveacc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dont have account?"
-        android:layout_below="@id/loginbutton"
+        android:id="@+id/haveacc"
+        android:text="Have account?"
+        android:layout_below="@id/registerbutton"
         android:layout_centerHorizontal="true"
         android:textColor="@color/white"
         android:layout_margin="2dp"
         />
     <Button
-        android:id="@+id/registerbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:id="@+id/login"
+        android:text="Login"
         android:textSize="15sp"
         android:background="#00FFFFFF"
-        android:layout_below="@id/donthaveacc"
+        android:layout_below="@id/haveacc"
         android:layout_centerHorizontal="true"
         android:textColor="#AC5B00"
         android:layout_margin="0dp"
