@@ -32,8 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
         registBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public voi
-             d onClick(View view) {
+            public void onClick(View view) {
                 viewToast(LoginActivity.this, "Menuju ke page register");
                 moveActivity(getApplicationContext(), RegisterActivity.class);
             }
