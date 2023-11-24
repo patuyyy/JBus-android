@@ -58,22 +58,25 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         />
+
     <EditText
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/password"
         android:layout_below="@id/email"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/roundedrectangle2"
         android:backgroundTint="#8ECDDD"
-        android:hint="Password"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:layout_margin="10dp"
-        android:padding="20dp"
         android:drawableLeft="@drawable/key_white"
         android:drawablePadding="15dp"
+        android:hint="Password"
         android:inputType="textPassword"
-        />
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -19,7 +19,6 @@
             android:id="@+id/initial"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:text="R"
             android:textSize="60dp"
             android:textStyle="bold"
             android:textAlignment="center"
@@ -28,18 +27,19 @@
             android:layout_marginTop="28dp"
             android:background="@drawable/oval"
             android:backgroundTint="#22668D"
+            tools:text="-"
             />
         <TextView
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#8ECDDD"
-            android:text="0101rmihsan"
             android:textSize="23dp"
             android:gravity="center"
             android:layout_below="@id/initial"
             android:typeface="monospace"
             android:layout_marginTop="18dp"
+            tools:text="-"
             />
         <TextView
             android:id="@+id/emailtxt"
@@ -53,13 +53,13 @@
             />
         <TextView
             android:id="@+id/emaildata"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/username"
-            android:gravity="right"
+            android:gravity="left"
             android:textSize="20dp"
+            android:layout_marginLeft="110dp"
             android:layout_marginTop="20dp"
-            android:layout_alignRight="@id/emailtxt"
             tools:text="-"
             />
         <TextView
@@ -68,21 +68,21 @@
             android:layout_height="wrap_content"
             android:text="Balance :"
             android:textSize="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:layout_marginLeft="20dp"
             android:layout_below="@id/emailtxt"
             />
+
         <TextView
             android:id="@+id/balancedata"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/emailtxt"
-            android:gravity="right"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="110dp"
+            android:gravity="left"
             android:textSize="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_alignRight="@id/balancetxt"
-            tools:text="-"
-            />
+            tools:text="-" />
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/bgputih2"
@@ -106,6 +106,7 @@
             android:textColorHint="#8ECDDD"
             android:textColor="#8ECDDD"
             android:paddingHorizontal="110dp"
+            android:gravity="center"
             />
         <Button
             android:id="@+id/topup"
