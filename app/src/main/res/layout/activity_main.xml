@@ -11,7 +11,7 @@
         android:id="@+id/jbus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="0dp"
         android:gravity="center"
         android:text="JBUS MAIN\n🚌"
@@ -28,8 +28,8 @@
         android:layout_below="@id/jbus"
         android:background="@drawable/roundedrectangle2"
         android:layout_marginLeft="56dp"
-        android:layout_marginTop="90dp"
-        android:backgroundTint="#FFFADD"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/white"
         >
         <ListView
             android:id="@+id/listbus"

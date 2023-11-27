@@ -27,6 +27,8 @@ public class AboutMeActivity extends AppCompatActivity {
     private EditText amountTopup = null;
     private TextView email, username, balance, initial = null;
     private Button topUpButton = null;
+    private TextView isrenter, notrenter, registerrenter = null;
+    private Button manageBusBtn = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,39 @@ public class AboutMeActivity extends AppCompatActivity {
         // sesuaikan dengan ID yang kalian buat di layout
         topUpButton = findViewById(R.id.topup);
 
+        isrenter = findViewById(R.id.isrenter);
+        notrenter = findViewById(R.id.notrenter);
+        registerrenter = findViewById(R.id.registerrenter);
+        manageBusBtn = findViewById(R.id.managebus);
+
+        if(LoginActivity.loggedAccount.company == null){
+            notrenter.setVisibility(View.VISIBLE);
+            registerrenter.setVisibility(View.VISIBLE);
+            isrenter.setVisibility(View.GONE);
+            manageBusBtn.setVisibility(View.GONE);
+        }
+        else {
+            notrenter.setVisibility(View.GONE);
+            registerrenter.setVisibility(View.GONE);
+            isrenter.setVisibility(View.VISIBLE);
+            manageBusBtn.setVisibility(View.VISIBLE);
+        }
+
+        manageBusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moveActivity(getApplicationContext(), ManageBusActivity.class);
+            }
+        });
+        registerrenter.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                moveActivity(getApplicationContext(), RegisterRenterActivity.class);
+                viewToast(AboutMeActivity.this, "Daftar perusahaan kuyy");
+                ;
+            }
+        });
+
         topUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,16 +102,17 @@ public class AboutMeActivity extends AppCompatActivity {
     }
     protected void handleTopup() {
         // handling empty field
-        double amountS = Double.parseDouble(amountTopup.getText().toString());
         String valueCheck = amountTopup.getText().toString();
+        double amountS = Double.parseDouble(amountTopup.getText().toString());
         int idS = LoginActivity.loggedAccount.id;
 
-        if (amountS == 0) {
-            Toast.makeText(mContext, "Gk bisa topUp 0 co",  Toast.LENGTH_SHORT).show();
+        if (valueCheck.isEmpty()) {
+            Toast.makeText(mContext, "Field cannot be empty",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
-        if (!valueCheck.matches("\\d+")) {
-            Toast.makeText(mContext, "Top Up ya pake duid, bukan tulisan",  Toast.LENGTH_SHORT).show();
+        if (amountS == 0) {
+            Toast.makeText(mContext, "Gk bisa topUp 0 co",  Toast.LENGTH_SHORT).show();
             return;
         }
         mApiService.topUp(idS, amountS).enqueue(new Callback<BaseResponse<Double>>() {

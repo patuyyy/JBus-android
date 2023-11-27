@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgfigma1"
+    tools:context=".RegisterRenterActivity">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/registertxt"
+        android:text="Register your company"
+        android:typeface="monospace"
+        android:textColor="#22668D"
+        android:textSize="40dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="40dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/companyname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/registertxt"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/roundedrectangle2"
+        android:backgroundTint="#8ECDDD"
+        android:drawableLeft="@drawable/baseline_drive_white"
+        android:drawablePadding="15dp"
+        android:hint="Company name"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <EditText
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/companyname"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/roundedrectangle2"
+        android:backgroundTint="#8ECDDD"
+        android:drawableLeft="@drawable/sign_white"
+        android:drawablePadding="15dp"
+        android:hint="Address"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        />
+
+    <EditText
+        android:id="@+id/phonenumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/address"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/roundedrectangle2"
+        android:backgroundTint="#8ECDDD"
+        android:drawableLeft="@drawable/key_white"
+        android:drawablePadding="15dp"
+        android:hint="Phone number"
+        android:inputType="textPassword"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+
+    <Button
+        android:id="@+id/registerbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phonenumber"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/roundedrectangle"
+        android:gravity="center"
+        android:text="register"
+        android:textColor="@color/white"
+        app:backgroundTint="#A1FAB957" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/haveacc"
+        android:text="Have account?"
+        android:layout_below="@id/registerbutton"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:layout_margin="2dp"
+        />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/haveacc"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="#00FFFFFF"
+        android:text="Login"
+        android:textColor="#AC5B00"
+        android:textSize="15sp" />
+
+</RelativeLayout>

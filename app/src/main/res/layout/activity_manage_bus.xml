@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgfigma1"
+    tools:context=".ManageBusActivity">
+
+    <TextView
+        android:id="@+id/managebus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="0dp"
+        android:gravity="center"
+        android:text="Manage your Bus\n🚌"
+        android:textColor="#22668D"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        android:typeface="monospace" />
+
+    <RelativeLayout
+        android:id="@+id/listbg"
+        android:layout_width="300dp"
+        android:layout_height="350dp"
+        android:gravity="center"
+        android:layout_below="@id/managebus"
+        android:background="@drawable/roundedrectangle2"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/white"
+        >
+        <TextView
+            android:id="@+id/yourbus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="YOUR BUS"
+            android:gravity="center"
+            android:layout_marginTop="20sp"
+            android:textSize="28sp"
+            android:layout_marginHorizontal="10dp"
+            android:textColor="#22668D"
+            android:backgroundTint="#FFCC70"/>
+
+        <ListView
+            android:id="@+id/listbus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/yourbus"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/bgputih3"
+        android:layout_width="300dp"
+        android:layout_height="85dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/roundedrectangle"
+        android:outlineAmbientShadowColor="@color/black"
+        android:layout_below="@id/listbg">
+        <TextView
+            android:id="@+id/addbustext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wanna add a bus?"
+            android:gravity="center"
+            android:layout_marginTop="10sp"
+            android:textColor="#8ECDDD"
+            android:textSize="15sp"
+            android:visibility="visible"
+            />
+        <Button
+            android:id="@+id/addbusbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundedrectangle"
+            app:backgroundTint="#FFCC70"
+            android:layout_below="@id/addbustext"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginBottom="15dp"
+            android:text="Add Bus"
+            android:textSize="10sp"
+            android:textColor="#FFFADD"
+            android:visibility="visible"
+            />
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

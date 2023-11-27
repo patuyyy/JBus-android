@@ -1,7 +1,7 @@
 package com.raihanMuhammadIhsanJBusAF.model;
 public enum City {
-    JAKARTA,
     DEPOK,
+    JAKARTA,
     BANDUNG,
     YOGYAKARTA,
     SEMARANG,
