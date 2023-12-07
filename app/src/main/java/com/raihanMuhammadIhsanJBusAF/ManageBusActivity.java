@@ -10,6 +10,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -29,11 +31,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ManageBusActivity extends AppCompatActivity {
-    private List<Bus> listBus = new ArrayList<>();
+    //private List<Bus> listBus = new ArrayList<>();
     private ListView busListView = null;
     private BaseApiService mApiService;
     private Context mContext;
-    private Button addBusBtn = null;
+    private Button addBusBtn, addScheduleBtn = null;
+    public static Bus selectedBus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +55,10 @@ public class ManageBusActivity extends AppCompatActivity {
         addBusBtn = findViewById(R.id.addbusbtn);
         addBusBtn.setOnClickListener(view -> {
             moveActivity(getApplicationContext(), AddBusActivity.class);
+        });
+        addScheduleBtn = findViewById(R.id.addscheduleBtn);
+        addScheduleBtn.setOnClickListener(view -> {
+            moveActivity(getApplicationContext(), AddBusScheduleActivity.class);
         });
 
     }
@@ -77,8 +85,17 @@ public class ManageBusActivity extends AppCompatActivity {
                 }
                 List<Bus> res = response.body();
                 ArrayList<Bus> set = new ArrayList<>(res);
-                BusRenterArrayAdapter busRenterAdptr = new BusRenterArrayAdapter(mContext, set);
+                BusRenterArrayAdapter busRenterAdptr = new BusRenterArrayAdapter(mContext, res);
                 busListView.setAdapter(busRenterAdptr);
+                busListView.setClickable(true);
+                busListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        selectedBus = res.get(i);
+                        moveActivity(getApplicationContext(), BusDetailActivity.class);
+                    }
+                });
+
                 // if success finish this activity (refresh page)
             }
             @Override

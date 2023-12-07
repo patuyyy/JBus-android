@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/roundedrectangle2"
-        android:backgroundTint="#A1FAB957"
+        android:backgroundTint="#FFFADD"
         android:gravity="center_vertical"
         android:paddingRight="20sp"
         android:orientation="vertical">

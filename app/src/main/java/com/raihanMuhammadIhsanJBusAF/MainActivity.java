@@ -6,7 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.raihanMuhammadIhsanJBusAF.model.BaseResponse;
 import com.raihanMuhammadIhsanJBusAF.model.Bus;
+import com.raihanMuhammadIhsanJBusAF.request.BaseApiService;
+import com.raihanMuhammadIhsanJBusAF.request.UtilsApi;
 
 import androidx.annotation.NonNull;
 
@@ -14,6 +17,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -25,6 +30,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity {
 
     private ImageView fpimage = null;
@@ -33,16 +42,23 @@ public class MainActivity extends AppCompatActivity {
     private int pageSize = 8; // kalian dapat bereksperimen dengan field ini
     private int listSize;
     private int noOfPages;
-    private List<Bus> listBus = new ArrayList<>();
+    public static List<Bus> listBus = new ArrayList<>();
     private Button prevButton = null;
     private Button nextButton = null;
     private ListView busListView = null;
     private HorizontalScrollView pageScroll = null;
+    private BaseApiService mApiService;
+    private Context mContext;
+    public static Bus selectedBusTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mContext = this;
+        mApiService = UtilsApi.getApiService();
+        handleList();
 
         ListView busList = findViewById(R.id.listbus);
         BusArrayAdapter busAdptr = new BusArrayAdapter(this, Bus.sampleBusList(50));
@@ -54,8 +70,7 @@ public class MainActivity extends AppCompatActivity {
         pageScroll = findViewById(R.id.page_number_scroll);
         busListView = findViewById(R.id.listbus);
 // membuat sample list
-        listBus = Bus.sampleBusList(20);
-        listSize = listBus.size();
+
 // construct the footer
         paginationFooter();
         goToPage(currentPage);
@@ -67,6 +82,36 @@ public class MainActivity extends AppCompatActivity {
         nextButton.setOnClickListener(v -> {
             currentPage = currentPage != noOfPages -1? currentPage+1 : currentPage;
             goToPage(currentPage);
+        });
+    }
+    protected void handleList() {
+        mApiService.getAllBus().enqueue(new Callback<List<Bus>>(){
+            @Override
+            public void onResponse(Call<List<Bus>> call, Response<List<Bus>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(mContext, "Application error " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                List<Bus> res = response.body();
+                listBus = res;
+                listSize = listBus.size();
+                paginationFooter();
+                goToPage(currentPage);
+                busListView.setClickable(true);
+                busListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        selectedBusTemp = res.get(i);
+                        moveActivity(getApplicationContext(), BusDetailMainActivity.class);
+                    }
+                });
+
+            }
+            @Override
+            public void onFailure(Call<List<Bus>> call, Throwable t) {
+                Toast.makeText(mContext, "Problem with the server",
+                        Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -82,6 +127,9 @@ public class MainActivity extends AppCompatActivity {
         if(itemId == R.id.account_btn){
             moveActivity(this, AboutMeActivity.class);
             return true;
+        }
+        if(itemId == R.id.payment_btn){
+            moveActivity(this, PaymentActivity.class);
         }
         return super.onOptionsItemSelected(item);
     }

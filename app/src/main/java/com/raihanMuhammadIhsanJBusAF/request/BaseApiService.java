@@ -5,6 +5,7 @@ import com.raihanMuhammadIhsanJBusAF.model.BaseResponse;
 import com.raihanMuhammadIhsanJBusAF.model.Bus;
 import com.raihanMuhammadIhsanJBusAF.model.BusType;
 import com.raihanMuhammadIhsanJBusAF.model.Facility;
+import com.raihanMuhammadIhsanJBusAF.model.Payment;
 import com.raihanMuhammadIhsanJBusAF.model.Renter;
 import com.raihanMuhammadIhsanJBusAF.model.Station;
 
@@ -47,10 +48,7 @@ public interface BaseApiService {
             @Query("address") String address,
             @Query("phoneNumber") String phoneNumber
     );
-    @GET("bus/getMyBus")
-    Call<List<Bus>> getMyBus(
-            @Query("accountId") int accountId
-    );
+
     @GET("station/getAll")
     Call<List<Station>> getAllStation();
 
@@ -65,5 +63,32 @@ public interface BaseApiService {
             @Query("stationDepartureId") int stationDepartureId,
             @Query("stationArrivalId") int stationArrivalId
             );
+    @POST("bus/addSchedule")
+    Call<BaseResponse<Bus>> addSchedule(
+            @Query("busId") int busId,
+            @Query("time") String time
+    );
+    @GET("bus/getBus")
+    Call<Bus> getBus(
+            @Query("busId") int busId
+    );
+    @GET("bus/getAllBus")
+    Call<List<Bus>> getAllBus();
+    @GET("bus/getMyBus")
+    Call<List<Bus>> getMyBus(
+            @Query("accountId") int accountId
+    );
+    @POST("payment/makeBooking")
+    Call<BaseResponse<Payment>> makeBooking(
+            @Query("buyerId") int buyerId,
+            @Query("renterId") int renterId,
+            @Query("busId") int busId,
+            @Query("busSeats") List<String> busSeats,
+            @Query("departureDate") String departureDate
+    );
+    @GET("payment/getMyPayment")
+    Call<List<Payment>> getMyPayment(
+            @Query("buyerId") int buyerId
+    );
 }
 
