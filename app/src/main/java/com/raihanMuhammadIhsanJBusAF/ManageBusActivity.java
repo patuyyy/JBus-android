@@ -58,7 +58,7 @@ public class ManageBusActivity extends AppCompatActivity {
         });
         addScheduleBtn = findViewById(R.id.addscheduleBtn);
         addScheduleBtn.setOnClickListener(view -> {
-            moveActivity(getApplicationContext(), AddBusScheduleActivity.class);
+            moveActivity(getApplicationContext(), ManageOrderActivity.class);
         });
 
     }

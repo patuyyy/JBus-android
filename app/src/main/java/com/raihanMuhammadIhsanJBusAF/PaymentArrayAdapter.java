@@ -56,8 +56,8 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
         TextView departureStation = currentItemView.findViewById(R.id.departure);
         TextView seat = currentItemView.findViewById(R.id.seats);
         TextView status = currentItemView.findViewById(R.id.status);
-        //busText.setText(MainActivity.listBus.get(currentPayment.getBusId()).name);
-        //departureStation.setText(MainActivity.listBus.get(currentPayment.getBusId()).departure.toString());
+        busText.setText(MainActivity.listBus.get(currentPayment.getBusId() - 1).name);
+        departureStation.setText(currentPayment.departureDate.toString());
         seat.setText(currentPayment.busSeats.toString());
         status.setText(currentPayment.status.toString());
 

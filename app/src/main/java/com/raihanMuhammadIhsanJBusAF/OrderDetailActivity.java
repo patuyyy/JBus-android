@@ -20,19 +20,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PaymentDetailActivity extends AppCompatActivity {
+public class OrderDetailActivity extends AppCompatActivity {
 
     private BaseApiService mApiService;
     private Context mContext;
     private Bus selectedBus;
     private TextView busName, seats, price = null;
-    private TextView busType, deptStation, arrStation, schedule, status, rating= null;
-    private Button cancelBtn = null;
-
+    private TextView deptStation, buyerName, schedule, status = null;
+    private Button acceptBtn, cancelBtn = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_payment_detail);
+        setContentView(R.layout.activity_order_detail);
         try {
             getSupportActionBar().hide();
         }catch (NullPointerException e){
@@ -40,33 +39,34 @@ public class PaymentDetailActivity extends AppCompatActivity {
 
         mContext = this;
         mApiService = UtilsApi.getApiService();
-        handleBus();
+        handlePayment();
 
         busName = findViewById(R.id.busname);
         seats = findViewById(R.id.seattxt);
         price = findViewById(R.id.price);
-        busType = findViewById(R.id.busTypetxt);
         deptStation = findViewById(R.id.departuretxt);
-        arrStation = findViewById(R.id.arrivaltxt);
+        buyerName = findViewById(R.id.buyertxt);
         schedule = findViewById(R.id.scheduledata);
         status = findViewById(R.id.paymentstatusdata);
-        rating = findViewById(R.id.ratingdata);
-
-
+        acceptBtn = findViewById(R.id.acceptbtn);
         cancelBtn = findViewById(R.id.cancelbtn);
 
-        if(PaymentActivity.selectedPayment.status == Invoice.PaymentStatus.WAITING){
-            cancelBtn.setVisibility(View.VISIBLE);
-        }else {
+        if(ManageOrderActivity.selectedPaymentTemp.status == Invoice.PaymentStatus.FAILED ||
+        ManageOrderActivity.selectedPaymentTemp.status == Invoice.PaymentStatus.SUCCESS) {
+            acceptBtn.setVisibility(View.GONE);
             cancelBtn.setVisibility(View.GONE);
         }
-        cancelBtn.setOnClickListener(view -> {
+        acceptBtn.setOnClickListener(v->{
+            handleAccept();
+        });
+        cancelBtn.setOnClickListener(v->{
             handleCancel();
         });
 
     }
+
     protected void handleCancel() {
-        mApiService.cancel(PaymentActivity.selectedPayment.id).enqueue(new Callback<BaseResponse<Payment>>() {
+        mApiService.cancel(ManageOrderActivity.selectedPaymentTemp.id).enqueue(new Callback<BaseResponse<Payment>>() {
             @Override
             public void onResponse(Call<BaseResponse<Payment>> call,
                                    Response<BaseResponse<Payment>> response) {
@@ -77,7 +77,7 @@ public class PaymentDetailActivity extends AppCompatActivity {
                     return;
                 }
                 BaseResponse<Payment> res = response.body();
-                PaymentActivity.selectedPayment.status = Invoice.PaymentStatus.FAILED;
+                ManageOrderActivity.selectedPaymentTemp.status = Invoice.PaymentStatus.FAILED;
                 // if success finish this activity (refresh page)
                 if (res.success) {
                     finish();
@@ -94,8 +94,37 @@ public class PaymentDetailActivity extends AppCompatActivity {
             }
         });
     }
-    private void handleBus() {
-        mApiService.getBus(PaymentActivity.selectedPayment.getBusId()).enqueue(new Callback<Bus>() {
+    protected void handleAccept() {
+        mApiService.accept(ManageOrderActivity.selectedPaymentTemp.id).enqueue(new Callback<BaseResponse<Payment>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<Payment>> call,
+                                   Response<BaseResponse<Payment>> response) {
+                // handle the potential 4xx & 5xx error
+                if (!response.isSuccessful()) {
+                    Toast.makeText(mContext, "Application error " +
+                            response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                BaseResponse<Payment> res = response.body();
+                ManageOrderActivity.selectedPaymentTemp.status = Invoice.PaymentStatus.SUCCESS;
+                // if success finish this activity (refresh page)
+                if (res.success) {
+                    finish();
+                    overridePendingTransition(0,0);
+                    startActivity(getIntent());
+                    overridePendingTransition(0, 0);
+                }
+                Toast.makeText(mContext, res.message, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onFailure(Call<BaseResponse<Payment>> call, Throwable t) {
+                Toast.makeText(mContext, "Problem with the server",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void handlePayment() {
+        mApiService.getBus(ManageOrderActivity.selectedPaymentTemp.getBusId()).enqueue(new Callback<Bus>() {
             @Override
             public void onResponse(Call<Bus> call,
                                    Response<Bus> response) {
@@ -108,14 +137,12 @@ public class PaymentDetailActivity extends AppCompatActivity {
                 Bus res = response.body();
                 selectedBus = res;
                 busName.setText(selectedBus.name);
-                seats.setText(PaymentActivity.selectedPayment.busSeats.toString());
+                seats.setText(ManageOrderActivity.selectedPaymentTemp.busSeats.toString());
                 price.setText("Rp." + Double.toString(selectedBus.price.price));
-                busType.setText(selectedBus.busType.toString());
                 deptStation.setText(selectedBus.departure.stationName);
-                arrStation.setText(selectedBus.arrival.stationName);
-                schedule.setText(PaymentActivity.selectedPayment.departureDate.toString());
-                status.setText(PaymentActivity.selectedPayment.status.toString());
-                rating.setText(PaymentActivity.selectedPayment.rating.toString());
+                buyerName.setText(""+ManageOrderActivity.selectedPaymentTemp.buyerId);
+                schedule.setText(ManageOrderActivity.selectedPaymentTemp.departureDate.toString());
+                status.setText(ManageOrderActivity.selectedPaymentTemp.status.toString());
                 // if success finish this activity (refresh page)
             }
             @Override
@@ -125,4 +152,5 @@ public class PaymentDetailActivity extends AppCompatActivity {
             }
         });
     }
+
 }

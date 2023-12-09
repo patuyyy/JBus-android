@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private BaseApiService mApiService;
     private Context mContext;
     public static Bus selectedBusTemp;
+    public static int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         selectedBusTemp = res.get(i);
+                        position = i;
                         moveActivity(getApplicationContext(), BusDetailMainActivity.class);
                     }
                 });

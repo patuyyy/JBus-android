@@ -14,7 +14,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="0dp"
         android:gravity="center"
-        android:text="Manage your\norder"
+        android:text="Manage your\nPayment"
         android:textColor="#22668D"
         android:textSize="40dp"
         android:textStyle="bold"

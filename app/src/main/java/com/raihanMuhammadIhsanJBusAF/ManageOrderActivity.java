@@ -1,26 +1,16 @@
 package com.raihanMuhammadIhsanJBusAF;
 
-import static java.security.AccessController.getContext;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.raihanMuhammadIhsanJBusAF.model.Bus;
 import com.raihanMuhammadIhsanJBusAF.model.Payment;
 import com.raihanMuhammadIhsanJBusAF.request.BaseApiService;
 import com.raihanMuhammadIhsanJBusAF.request.UtilsApi;
@@ -32,17 +22,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PaymentActivity extends AppCompatActivity {
+public class ManageOrderActivity extends AppCompatActivity {
 
     private BaseApiService mApiService;
     private Context mContext;
     private ListView paymentListView = null;
-    private TextView balance = null;
-    public static Payment selectedPayment = null;
+    public static Payment selectedPaymentTemp = null;
+    private final int accId = LoginActivity.loggedAccount.id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_payment);
+        setContentView(R.layout.activity_manage_order);
         try {
             getSupportActionBar().hide();
         }catch (NullPointerException e){
@@ -54,13 +44,10 @@ public class PaymentActivity extends AppCompatActivity {
         paymentListView = findViewById(R.id.listorder);
         handleList();
 
-        balance = findViewById(R.id.balancedata);
-        balance.setText(Double.toString(LoginActivity.loggedAccount.balance));
-
     }
     protected void handleList() {
         // handling empty field
-        mApiService.getMyPayment(LoginActivity.loggedAccount.id).enqueue(new Callback<List<Payment>>() {
+        mApiService.getMyOrder(accId).enqueue(new Callback<List<Payment>>() {
             @Override
             public void onResponse(Call<List<Payment>> call,
                                    Response<List<Payment>> response) {
@@ -78,8 +65,8 @@ public class PaymentActivity extends AppCompatActivity {
                 paymentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        selectedPayment = res.get(i);
-                        moveActivity(getApplicationContext(), PaymentDetailActivity.class);
+                        selectedPaymentTemp = res.get(i);
+                        moveActivity(getApplicationContext(), OrderDetailActivity.class);
                     }
                 });
 
@@ -92,7 +79,6 @@ public class PaymentActivity extends AppCompatActivity {
             }
         });
     }
-
     private void moveActivity(Context ctx, Class<?> cls) {
         Intent intent = new Intent(ctx, cls);
         startActivity(intent);

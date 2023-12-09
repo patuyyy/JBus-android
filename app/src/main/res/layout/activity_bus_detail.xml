@@ -8,7 +8,7 @@
     tools:context=".BusDetailActivity">
 
     <TextView
-        android:id="@+id/addbustxt"
+        android:id="@+id/busdetailtxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Bus Detail"
@@ -23,7 +23,7 @@
 
     <RelativeLayout
         android:id="@+id/bgputih"
-        android:layout_below="@id/addbustxt"
+        android:layout_below="@id/busdetailtxt"
         android:layout_width="380dp"
         android:layout_height="576dp"
         android:layout_centerHorizontal="true"

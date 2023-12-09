@@ -90,5 +90,17 @@ public interface BaseApiService {
     Call<List<Payment>> getMyPayment(
             @Query("buyerId") int buyerId
     );
+    @GET("payment/getMyOrder")
+    Call<List<Payment>> getMyOrder(
+            @Query("renterId") int renterId
+    );
+    @POST("payment/{id}/cancel")
+    Call<BaseResponse<Payment>> cancel(
+            @Path("id") int id
+    );
+    @POST("payment/{id}/accept")
+    Call<BaseResponse<Payment>> accept(
+            @Path("id") int id
+    );
 }
 
