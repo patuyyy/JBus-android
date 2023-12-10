@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ public class BusDetailActivity extends AppCompatActivity {
     private TextView busType, deptStation, arrStation= null;
     private CheckBox acCheckBox, wifiCheckBox, toiletCheckBox, lcdCheckBox;
     private CheckBox coolboxCheckBox, lunchCheckBox, baggageCheckBox, electricCheckBox;
+    private Button addScheduleBtn = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,11 @@ public class BusDetailActivity extends AppCompatActivity {
         if(ManageBusActivity.selectedBus.facilities.contains(Facility.LUNCH)){lunchCheckBox.setChecked(true);}
         if(ManageBusActivity.selectedBus.facilities.contains(Facility.LARGE_BAGGAGE)){baggageCheckBox.setChecked(true);}
         if(ManageBusActivity.selectedBus.facilities.contains(Facility.ELECTRIC_SOCKET)){electricCheckBox.setChecked(true);}
+
+        addScheduleBtn = findViewById(R.id.addscedbtn);
+        addScheduleBtn.setOnClickListener(view -> {
+            moveActivity(getApplicationContext(), AddBusScheduleActivity.class);
+        });
 
 
     }

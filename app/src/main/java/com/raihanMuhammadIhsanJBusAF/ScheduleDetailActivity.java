@@ -39,14 +39,16 @@ public class ScheduleDetailActivity extends AppCompatActivity {
     private BaseApiService mApiService;
     private Context mContext;
     private TextView busName, capacity, price = null;
-    private TextView deptStation, arrStation= null;
+    private TextView deptStation, arrStation, seatText= null;
     private Spinner scheduleSpinner, seatSpinner;
     private List<Schedule> scheduleList = new ArrayList<>();
     private String selectedSeat = null;
     private Schedule selectedSchedule = null;
     private List<String> scheduleTimeList = new ArrayList<>();
     private List<String> seatAvaibleList = new ArrayList<>();
-    private Button makeBookingBtn = null;
+    private List<String> seatToOrderList = new ArrayList<>();
+
+    private Button makeBookingBtn, addSeatBtn = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class ScheduleDetailActivity extends AppCompatActivity {
 
         scheduleSpinner = findViewById(R.id.schedule_dropdown);
         seatSpinner = findViewById(R.id.seat_dropdown);
+
 
         scheduleList = MainActivity.selectedBusTemp.schedules;
         for(Schedule sced : scheduleList) {
@@ -116,6 +119,13 @@ public class ScheduleDetailActivity extends AppCompatActivity {
         };
         scheduleSpinner.setOnItemSelectedListener(scedOISL);
 
+        addSeatBtn = findViewById(R.id.addbtn);
+        seatText = findViewById(R.id.seattoorder);
+        addSeatBtn.setOnClickListener(v->{
+            seatToOrderList.add(selectedSeat);
+            seatText.setText(seatToOrderList.toString());
+        });
+
         makeBookingBtn = findViewById(R.id.makebookingbtn);
         makeBookingBtn.setOnClickListener(view -> {
             handleMakeBooking();
@@ -135,7 +145,7 @@ public class ScheduleDetailActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        mApiService.makeBooking(buyerIdS, renterIdS, busIdS, busSeatS,departureDateS).enqueue(new Callback<BaseResponse<Payment>>() {
+        mApiService.makeBooking(buyerIdS, renterIdS, busIdS, seatToOrderList,departureDateS).enqueue(new Callback<BaseResponse<Payment>>() {
             @Override
             public void onResponse(Call<BaseResponse<Payment>> call,
                                    Response<BaseResponse<Payment>> response) {
@@ -146,8 +156,11 @@ public class ScheduleDetailActivity extends AppCompatActivity {
                     return;
                 }
                 BaseResponse<Payment> res = response.body();
+
                 // if success finish this activity (back to login activity)
                 if (res.success) {
+                    LoginActivity.loggedAccount.balance -= MainActivity.selectedBusTemp.price.price *
+                    seatToOrderList.size();
                     finish();
                     moveActivity(getApplicationContext(), MainActivity.class);
                     overridePendingTransition(0,0);

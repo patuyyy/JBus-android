@@ -80,6 +80,8 @@ public class PaymentDetailActivity extends AppCompatActivity {
                 PaymentActivity.selectedPayment.status = Invoice.PaymentStatus.FAILED;
                 // if success finish this activity (refresh page)
                 if (res.success) {
+                    LoginActivity.loggedAccount.balance += MainActivity.listBus.get(PaymentActivity.selectedPayment.getBusId()-1).price.price
+                    * PaymentActivity.selectedPayment.busSeats.size();
                     finish();
                     overridePendingTransition(0,0);
                     startActivity(getIntent());

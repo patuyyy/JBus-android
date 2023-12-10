@@ -210,11 +210,53 @@
                 app:tint="#22668D" />
             <Spinner
                 android:id="@+id/seat_dropdown"
-                android:layout_width="match_parent"
+                android:layout_width="120sp"
                 android:layout_height="48dp"
                 android:layout_marginLeft="10sp"
                 />
+            <Button
+                android:id="@+id/addbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:background="@drawable/roundedrectangle2"
+                app:backgroundTint="#22668D"
+                android:layout_below="@id/seatlayout"
+                android:gravity="center"/>
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/seatlistlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seatlayout"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20sp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:text="Seat to order"
+                android:textSize="18dp"
+                android:textColor="#22668D"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/seat_white"
+                app:tint="#22668D" />
+            <TextView
+                android:id="@+id/seattoorder"
+                android:layout_width="match_parent"
+                tools:text="Seat list"
+                android:layout_height="48dp"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10sp"
+                android:paddingLeft="5sp"/>
+        </LinearLayout>
+
+
     </RelativeLayout>
     <Button
         android:id="@+id/makebookingbtn"

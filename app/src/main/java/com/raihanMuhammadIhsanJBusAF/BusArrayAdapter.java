@@ -34,8 +34,15 @@ public class BusArrayAdapter extends ArrayAdapter<Bus> {
         Bus currentBus = getItem(position);
 
         // then according to the position of the view assign the desired TextView 1 for the same
-        TextView busText = currentItemView.findViewById(R.id.text_view);
+        TextView busText = currentItemView.findViewById(R.id.busname);
+        TextView busTypeText = currentItemView.findViewById(R.id.bustypetext);
+        TextView departureText = currentItemView.findViewById(R.id.departure);
+        TextView arrivalText = currentItemView.findViewById(R.id.arrival);
         busText.setText(currentBus.name);
+        busTypeText.setText(currentBus.busType.toString());
+        departureText.setText(currentBus.departure.stationName);
+        arrivalText.setText(currentBus.arrival.stationName);
+
 
         return currentItemView;
     }

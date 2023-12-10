@@ -283,4 +283,16 @@
                 />
         </GridLayout>
     </RelativeLayout>
+    <Button
+        android:id="@+id/addscedbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="120sp"
+        android:layout_marginTop="615sp"
+        android:text="Add schedule "
+        android:background="@drawable/roundedrectangle2"
+        app:backgroundTint="#22668D"
+        android:gravity="center"
+        android:textColor="@color/white"
+        />
 </RelativeLayout>

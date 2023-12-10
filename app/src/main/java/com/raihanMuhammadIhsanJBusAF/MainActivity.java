@@ -12,6 +12,7 @@ import com.raihanMuhammadIhsanJBusAF.request.BaseApiService;
 import com.raihanMuhammadIhsanJBusAF.request.UtilsApi;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 
 import android.view.Gravity;
 import android.view.Menu;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView fpimage = null;
     private Button[] btns;
     private int currentPage = 0;
-    private int pageSize = 8; // kalian dapat bereksperimen dengan field ini
+    private int pageSize = 4; // kalian dapat bereksperimen dengan field ini
     private int listSize;
     private int noOfPages;
     public static List<Bus> listBus = new ArrayList<>();
@@ -49,8 +50,12 @@ public class MainActivity extends AppCompatActivity {
     private HorizontalScrollView pageScroll = null;
     private BaseApiService mApiService;
     private Context mContext;
+    private String selectedFilter = "all";
+    private String currentTextSearch = "";
+    private SearchView searchView;
     public static Bus selectedBusTemp;
     public static int position;
+    ArrayList<Bus> filteredBus = new ArrayList<Bus>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +65,11 @@ public class MainActivity extends AppCompatActivity {
         mContext = this;
         mApiService = UtilsApi.getApiService();
         handleList();
+        initSearchWidgets();
 
-        ListView busList = findViewById(R.id.listbus);
-        BusArrayAdapter busAdptr = new BusArrayAdapter(this, Bus.sampleBusList(50));
-        busList.setAdapter(busAdptr);
+//        ListView busList = findViewById(R.id.listbus);
+//        BusArrayAdapter busAdptr = new BusArrayAdapter(this, Bus.sampleBusList(50));
+//        busList.setAdapter(busAdptr);
 
         // hubungkan komponen dengan ID nya
         prevButton = findViewById(R.id.prev_page);
@@ -73,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
 // membuat sample list
 
 // construct the footer
-        paginationFooter();
-        goToPage(currentPage);
+//        paginationFooter();
+//        goToPage(currentPage);
 // listener untuk button prev dan button
         prevButton.setOnClickListener(v -> {
             currentPage = currentPage != 0? currentPage-1 : 0;
@@ -83,6 +89,89 @@ public class MainActivity extends AppCompatActivity {
         nextButton.setOnClickListener(v -> {
             currentPage = currentPage != noOfPages -1? currentPage+1 : currentPage;
             goToPage(currentPage);
+        });
+
+    }
+    private void filterList(String status) {
+        selectedFilter = status;
+        filteredBus = new ArrayList<Bus>();
+        for(Bus b : listBus) {
+            if(b.departure.stationName.toLowerCase().contains(status.toLowerCase())) {
+                if(currentTextSearch == ""){
+                    filteredBus.add(b);
+                }
+                else {
+                    if(b.name.toLowerCase().contains(currentTextSearch.toLowerCase())) {
+                        filteredBus.add(b);
+                    }
+                }
+            }
+        }
+        BusArrayAdapter paginatedAdapter = new BusArrayAdapter(mContext, filteredBus);
+        busListView = findViewById(R.id.listbus);
+        busListView.setAdapter(paginatedAdapter);
+        busListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedBusTemp = filteredBus.get((currentPage) * pageSize + i);
+                position = i;
+                moveActivity(getApplicationContext(), BusDetailMainActivity.class);
+            }
+        });
+    }
+    public void allFilterTapped(View view) {
+        selectedFilter = "all";
+        searchView.setQuery("", false);
+        searchView.clearFocus();
+
+        BusArrayAdapter paginatedAdapter = new BusArrayAdapter(mContext, listBus);
+        busListView = findViewById(R.id.listbus);
+        busListView.setAdapter(paginatedAdapter);
+    }
+    public void jatijajarFilterTapped(View view) {
+        filterList("Terminal Jatijajar");
+    }
+    public void manggaraiFilterTapped(View view) {
+        filterList("Terminal Manggarai");
+    }
+    public void sukabumiFilterTapped(View view) {
+        filterList("Terminal Sukabumi");
+    }
+    public void purabayaFilterTapped(View view) {
+        filterList("Terminal Purabaya");
+    }
+    public void giwanganFilterTapped(View view) {
+        filterList("Terminal Giwangan");
+    }
+    private void initSearchWidgets() {
+        searchView = (SearchView) findViewById(R.id.searchbar);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                currentTextSearch = newText;
+                filteredBus = new ArrayList<Bus>();
+                for(Bus b : listBus) {
+                    if(b.name.toLowerCase().contains(newText.toLowerCase())) {
+                        if(selectedFilter.equals("all")) {
+                            filteredBus.add(b);
+                        }
+                        else {
+                            if(b.name.toLowerCase().contains(selectedFilter)) {
+                                filteredBus.add(b);
+                            }
+                        }
+                    }
+                }
+                BusArrayAdapter paginatedAdapter = new BusArrayAdapter(mContext, filteredBus);
+                busListView = findViewById(R.id.listbus);
+                busListView.setAdapter(paginatedAdapter);
+                return false;
+            }
         });
     }
     protected void handleList() {
@@ -102,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 busListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        selectedBusTemp = res.get(i);
+                        selectedBusTemp = res.get((currentPage) * pageSize + i);
                         position = i;
                         moveActivity(getApplicationContext(), BusDetailMainActivity.class);
                     }

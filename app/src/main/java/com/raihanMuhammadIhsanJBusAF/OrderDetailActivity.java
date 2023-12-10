@@ -109,6 +109,8 @@ public class OrderDetailActivity extends AppCompatActivity {
                 ManageOrderActivity.selectedPaymentTemp.status = Invoice.PaymentStatus.SUCCESS;
                 // if success finish this activity (refresh page)
                 if (res.success) {
+                    LoginActivity.loggedAccount.balance += MainActivity.listBus.get(ManageOrderActivity.selectedPaymentTemp.getBusId()-1).price.price
+                    *ManageOrderActivity.selectedPaymentTemp.busSeats.size();
                     finish();
                     overridePendingTransition(0,0);
                     startActivity(getIntent());
